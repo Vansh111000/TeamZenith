@@ -1,21 +1,26 @@
-import CustomButtons from '@/components/custombuttons';
 import { Ionicons } from '@expo/vector-icons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Link } from 'expo-router';
-import React, { useState } from 'react';
+import { Link, router } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  // const { user, setUser, setIsLogged } = useGlobalContext();
+
+  // useEffect(() => {
+  //     if (!user) {
+  //       console.log("User is null, redirecting to sign-in...");
+  //       router.push('/(auth)/sign-in');  // Ensure navigation updates
+  //     }
+  //   }, [user]);
 
   // Common health tips
   const healthTips = [
@@ -143,7 +148,7 @@ const HomeScreen = () => {
             style={styles.assessmentCardGradient}
           >
             <View style={styles.assessmentCardContent}>
-              <View>
+            <View style={{ flex: 1, marginRight: 10 }}>
                 <Text style={styles.assessmentCardTitle}>Work Out tips</Text>
                 <Text style={styles.assessmentCardSubtitle}>
                 Improve your fitness with expert advice.
@@ -278,34 +283,43 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   assessmentCard: {
-    marginBottom: 20,
+    width: "100%",
     borderRadius: 15,
-    overflow: 'hidden',
+    overflow: "hidden",
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
+    marginBottom: 15, // Adjust spacing
+    backgroundColor: "white",
   },
   assessmentCardGradient: {
     padding: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    minHeight: 80, // Ensures a consistent height
   },
   assessmentCardContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1, // Ensures content fills available space
   },
   assessmentCardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 5,
   },
   assessmentCardSubtitle: {
     fontSize: 14,
-    color: 'white',
-    marginTop: 5,
-    maxWidth: '80%',
+    color: "white",
+    maxWidth: "90%", // Prevents text from wrapping oddly
+    flexWrap: "wrap",
   },
+  
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',

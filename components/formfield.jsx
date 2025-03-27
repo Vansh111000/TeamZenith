@@ -1,25 +1,17 @@
-import { StyleSheet, Text, View ,TextInput,TouchableOpacity,Image} from 'react-native'
-import React from 'react'
-import { useState } from 'react'
-
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
 import { icons } from "../constants";
 
-const FormField = ({title,value,placeholder,handleChangeText,otherStyles, ...props}) => {
-  const [showPassword, setShowPassword] = useState(false)
+const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, ...props }) => {
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View style={[{ justifyContent: "center", alignItems: "center", width: "100%" }, otherStyles]}>
-      <Text style={{ color: "#E4EB9C", fontSize: 20, textAlign: "center" }}>{title}</Text>
+    <View style={[styles.container, otherStyles]}>
+      <Text style={styles.title}>{title}</Text>
 
-      <View style={[styles.importbox, { justifyContent: "center", alignItems: "center" ,borderColor: "#E4EB9C", borderWidth: 1,}]}>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={{
-            color: "#000",
-            width: "100%",
-            fontSize: 20,
-            fontWeight: "600",
-            textAlign: "center",
-          }}
+          style={styles.input}
           value={value}
           placeholder={placeholder}
           placeholderTextColor="#7B7B8B"
@@ -32,34 +24,53 @@ const FormField = ({title,value,placeholder,handleChangeText,otherStyles, ...pro
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
             <Image
               source={!showPassword ? icons.eye : icons.eyeHide}
-              style={{
-                width: 25,
-                height: 25,
-                opacity: 0.75,
-                tintColor: "#E4EB9C",
-              }}
+              style={styles.icon}
               resizeMode="contain"
+              tintColor="#E4EB9C" // ✅ Moved tintColor as a prop
             />
           </TouchableOpacity>
         )}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default FormField
+export default FormField;
 
 const styles = StyleSheet.create({
-  importbox: {
-    backgroundColor: '#fff',
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  title: {
+    color: "#E4EB9C",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  inputContainer: {
+    backgroundColor: "#fff",
     height: 50,
     width: "95%",
     borderRadius: 10,
     marginTop: "1%",
     marginBottom: 10,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    borderColor: "#E4EB9C",
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
-    flexDirection: 'row',
+    flexDirection: "row",
   },
-})
+  input: {
+    color: "#000",
+    fontSize: 20,
+    fontWeight: "600",
+    flex: 1, // Allow TextInput to take up available space
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    opacity: 0.75,
+  },
+});
