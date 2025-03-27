@@ -1,26 +1,24 @@
-import { useEffect } from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet } from "react-native";
 import { router } from "expo-router";
+import { useEffect } from "react";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // import InfoBox from "@/components/infoBox";
+import EmptyState from "@/components/EmptyState";
 import InfoBox from "@/components/Infobox";
 import { icons } from "@/constants";
 import { useGlobalContext } from "@/context/globalprovider";
 import { getUserPosts, signOut } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
-import EmptyState from "@/components/EmptyState";
 
 const Profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
 
-  const { data: posts = [] } = useAppwrite(() => getUserPosts(user?.$id));  // Ensure posts is always an array
-
+  const { data: posts = [] } = useAppwrite(() => getUserPosts(user?.$id));  
   useEffect(() => {
     if (!user) {
       console.log("User is null, redirecting to sign-in...");
-      router.replace('/(auth)/sign-in');  // Ensure navigation updates
+      router.replace('/(auth)/sign-in');  
     }
   }, [user]);
 

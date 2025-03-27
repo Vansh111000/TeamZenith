@@ -1,7 +1,12 @@
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { Image, Text, View } from "react-native";
 import { icons } from "../../constants";
 import { StatusBar } from "expo-status-bar";
+import { useGlobalContext } from "@/context/globalprovider";
+import useAppwrite from "@/lib/useAppwrite";
+import { getUserPosts } from "@/lib/appwrite";
+import { useEffect } from "react";
+
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -28,6 +33,17 @@ const TabIcon = ({ icon, color, name, focused }) => {
 };
 
 const TabLayout = () => {
+  const { user, setUser, setIsLogged } = useGlobalContext();
+
+  const { data: posts = [] } = useAppwrite(() => getUserPosts(user?.$id)); 
+
+useEffect(() => {
+    if (!user) {
+      console.log("User is null, redirecting to sign-in...");
+      router.replace('/(auth)/sign-in');  
+    }
+  }, [user]);
+
   return (
     <>
       <StatusBar backgroundColor="#4169E1" style="light" />
